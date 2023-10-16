@@ -10,57 +10,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Product_master {
-  pro_id                  String  @id @default(cuid())
-  pro_name                String
-  pro_category            String  
-  cost                    Int
-  selling                 Int     
-  maker                   String
-  size                    String
-  weight                  String
+model Product {
+  id                Int @id @default(autoincrement())
+  pro_name          String
+  maker             String
+  category          String
+  price             Int
+  stock             Stock?
 
-  stock_details Stock_details?
-  order_details Order_details[]
+
 }
 
-model Stock_details {
-  stock_id          String @default(cuid())
-  stock_num         String
+model Stock {
+  id                Int @id @default(autoincrement())
+  stock_num         Int
+  product Product   @relation(fields: [pro_id], references: [id])
+  pro_id            Int @unique
 
-  pro_id            String  @unique // relation scalar field (used in the `@relation` attribute above)
-  product Product_master @relation(fields: [pro_id], references: [pro_id]) // fields: [pro_id] = Stock_details.pro_id, references: [Product_master.pro_id]
 }
 
-model Customer_master {
-  cust_id           String  @id @default(cuid())
-  name              String
-  address           String
-  email             String
 
-  order_master Order_master[]
-}
-
-model Order_master {
-  order_master_id String  @id @default(cuid())
-  cust_id         String
-  order_id        String @unique
-  payment         String
-
-  order_details Order_details[]
-  custommer Customer_master @relation(fields: [cust_id], references: [cust_id])
-}
-
-model Order_details {
-  order_id           String   @id @default(cuid())
-  pro_id             String
-  pieces             String
-  unit_price         String   @unique
-  subtotal           String
-
-  productID Product_master @relation(fields: [pro_id], references: [pro_id])
-  orderID Order_master @relation(fields: [order_id], references: [order_id])
-}
 
 
 

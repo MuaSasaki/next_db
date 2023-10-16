@@ -1,10 +1,23 @@
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
+//このページはMDを扱うために作成（チュートリアルでは解説なし。）
+import fs from 'fs';//ファイルシステムからファイルを読み取れるNode.jsモジュール
+import path from 'path';//ファイルパスを操作できる
+import matter from 'gray-matter';//マークダウンのメタデータ解析
 import { remark } from 'remark';
 import html from 'remark-html';
 
 const postsDirectory = path.join(process.cwd(), 'posts');
+
+/*
+import someDatabaseSDK from 'someDatabaseSDK'
+
+const databaseClient = someDatabaseSDK.createClient(...)
+const API_TEST =() =>{
+
+  // Instead of the file system,
+  // fetch post data from a database
+  return databaseClient.query('SELECT posts...')
+}
+*/
 
 export function getSortedPostsData() {
   // Get file names under /posts

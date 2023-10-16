@@ -4,10 +4,22 @@ import utilStyles from '../styles/utils.module.css';
 import { getSortedPostsData } from '../lib/posts';
 import Link from 'next/link';
 import Date from '../components/date';
-import { GetStaticProps } from 'next';
+import { GetStaticProps } from 'next';//GetStaticProps →実稼働環境のビルド時に実行され、ユーザーの操作前に（ページがリロードされた時に）自動的にレンダリング？
 
-export default function Home({
-  allPostsData,
+
+
+
+export const getStaticProps: GetStaticProps = async () => {//ページできたときに実行される？？
+  const allPostsData = getSortedPostsData();
+  return {
+    props: {
+      allPostsData,
+    },
+  };
+};
+
+export default function Home({//外部データ（ローカルのMDファイル）を持ってきている。
+  allPostsData
 }: {
   allPostsData: {
     date: string;
@@ -44,12 +56,3 @@ export default function Home({
     </Layout>
   );
 }
-
-export const getStaticProps: GetStaticProps = async () => {
-  const allPostsData = getSortedPostsData();
-  return {
-    props: {
-      allPostsData,
-    },
-  };
-};
