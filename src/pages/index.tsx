@@ -6,44 +6,18 @@ import Link from 'next/link';
 import Date from '../components/date';
 import { GetStaticProps, InferGetStaticPropsType } from 'next';//GetStaticProps →実稼働環境のビルド時に実行され、ユーザーの操作前に（ページがリロードされた時に）自動的にレンダリング？
 import axios from 'axios';
+import OrderForm from "../components/orderForm"
 
-
-
-
-// export const getStaticProps: GetStaticProps = async () => {//ページできたときに実行される？？
-//   const allPostsData = getSortedPostsData();
-//   return {
-//     props: {
-//       allPostsData,
-//     },
-//   };
-// };
 export type Stock = {
   id:number
   stock_num:number
   pro_id:number
 }
 
+// type Props =  {
+//   allStockData :Stock[]
+// }
 
-type Props =  {
-  allStockData :Stock[]
-}
-
-
-
-
-// export const getStaticProps: GetStaticProps = async () => {//ページできたときに実行される？？
-//   const allStockData = await getStockData();
-//   // const allStockData = [{ id: 2, stock_num: 30, pro_id: 2 }];
-//   console.log("allStockdata",allStockData);
-//   // const allStockData = [ { id: 1, stock_num: 25, pro_id: 1 } ];
-  
-//   return {
-//     props: {
-//       allStockData
-//     },
-//   };
-// };
 
 export  const getStaticProps = async () =>{
   // const res = await fetch("http://localhost:3000/api/stocks")
@@ -56,8 +30,8 @@ export  const getStaticProps = async () =>{
 }
 
 // export default function Home({allStockData,}:InferGetStaticPropsType<typeof getStaticProps>) {
-export default function Home({allStockData}:Props) {
-  // if (typeof allStockData[0] !== "undefined")
+export default function Home({allStockData,}:InferGetStaticPropsType<GetStaticProps>,) {
+  
   return (
     <Layout home>
       <Head>
@@ -66,7 +40,7 @@ export default function Home({allStockData}:Props) {
       <section className={utilStyles.stocks}>
         <h1>在庫一覧</h1>
         <ul>
-          {allStockData && allStockData.map((stock)=>{
+          {allStockData && allStockData.map((stock:Stock)=>{
             return(
               <li key ={stock.id}>
                 <p>在庫ID:{stock.id}</p>
@@ -78,7 +52,8 @@ export default function Home({allStockData}:Props) {
         </ul>
       </section>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-        <h2 className={utilStyles.headingLg}>Blog</h2>
+        <h2 className={utilStyles.headingLg}>発注フォーム</h2>
+        <OrderForm/>
       </section>
     </Layout>
   );
