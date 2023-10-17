@@ -4,6 +4,8 @@ import path from 'path';//ファイルパスを操作できる
 import matter from 'gray-matter';//マークダウンのメタデータ解析
 import { remark } from 'remark';
 import html from 'remark-html';
+import axios from 'axios';
+import { af } from 'date-fns/locale';
 
 const postsDirectory = path.join(process.cwd(), 'posts');
 
@@ -80,3 +82,42 @@ export async function getPostData(id: string) {
     ...(matterResult.data as { date: string; title: string }),
   };
 }
+type ResolveRes = {
+  id:string,
+  date:string,
+  title:string,
+  contentHtml:any
+}
+export async function getPostData2(id: string) {
+  const url = `/api/posts/${id}`;
+  const data = {a:"b"}
+  await axios.post(url,data)
+  .then((res) => {
+    const status = res.status;
+    const data = res.data;
+    if(status === 200){
+      return data;
+    }else {
+      return data;
+    }
+  }).cathch((err)=>{
+    console.error(err)
+  })
+
+//   let res ={} as ResolveRes | RejectRes
+//   const url = `/api/posts/${id}`;
+//   fetch(url).then((res)=>{
+//     res = {
+//       id:"a",date:"b",title:"c",contentHtml:"d"
+//     }as ResolveRes
+//   }).catch((err) => {console.error(err)
+//   res = {} as RejectRes})
+
+//   return res;
+//   // Combine the data with the id and contentHtml
+//   return {
+//     id,
+//     contentHtml,
+//     ...(matterResult.data as { date: string; title: string }),
+//   };
+// }
