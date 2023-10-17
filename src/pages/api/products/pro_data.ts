@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse, NextApiHandler } from 'next';
-import  prisma  from '../../../lib/Prisma';
+import  prisma  from '../../../lib/prisma';
 // import { useRouter } from 'next/router';
 
 

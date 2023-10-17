@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse, NextApiHandler } from 'next';
-import  prisma  from '../../../lib/Prisma';
+import  prisma  from '../../../lib/prisma';
 // import { useRouter } from 'next/router';
 
 
@@ -8,37 +8,21 @@ const getHandler = async (
     _:NextApiRequest,res:NextApiResponse
 )=>{
     let statusCode = 200;
-    const resUser = await prisma.stock
+    const resStock = await prisma.stock
     .findMany()
-    .catch((err => {
+    .catch((err) => {
         statusCode  = 500;
         console.log(err);
         return {error:'Failed to read'};
-    }))
+    })
     .finally(async () => {
         await prisma.$disconnect();
     })
 
-    res.status(statusCode).json(resUser)
+    res.status(statusCode).json(resStock)
 };
 
-const postHandler = async (
-    _:NextApiRequest,res:NextApiResponse
-)=>{
-    let statusCode = 200;
-    const resUser = await prisma.stock
-    .findMany()
-    .catch((err => {
-        statusCode  = 500;
-        console.log(err);
-        return {error:'Failed to read'};
-    }))
-    .finally(async () => {
-        await prisma.$disconnect();
-    })
 
-    res.status(statusCode).json(resUser)
-};
 
 
 const handler: NextApiHandler = (req,res) =>{
