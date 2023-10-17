@@ -1,9 +1,13 @@
 import type { NextApiRequest, NextApiResponse, NextApiHandler } from 'next';
 import  prisma  from '../../../lib/Prisma';
+import { useRouter } from 'next/router';
+
+
 
 const getHandler = async (
-    req:NextApiRequest,res:NextApiResponse
+    sql_name:string|string[]|undefined,req:NextApiRequest,res:NextApiResponse
 )=>{
+    let statusCode = 200;
     const resUser = await prisma.stock
     .findMany()
     .catch((err => {
@@ -15,23 +19,25 @@ const getHandler = async (
         await prisma.$disconnect();
     })
 
-    res.status(statusCode).json(resXxxx)
+    res.status(statusCode).json(resUser)
 };
 
 const postHandler = async (
-    req:NextApiRequest,res:NextApiResponse
+    sql_name:string|string[]|undefined,req:NextApiRequest,res:NextApiResponse
 ) =>{
 
 };
 
 
 const handler: NextApiHandler = (req,res) =>{
+    const router = useRouter();
+    const {sql_name} = router.query;
     switch(req.method){
         case 'GET':
-            getHandler(req, res);
+            getHandler(sql_name,req, res);
             break;
         case 'POST':
-            postHandler(req, res);
+            postHandler(sql_name,req, res);
             break;
         default:
             return res.status(405).json({error:'Method not allowed.'});
