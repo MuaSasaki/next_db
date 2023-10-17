@@ -4,7 +4,7 @@ import  prisma  from '../../../lib/prisma';
 
 
 const postHandler = async (
-  req:NextApiRequest,res:NextApiResponse
+    req:NextApiRequest,res:NextApiResponse
 ) =>{
     let statusCode = 200;
     const _data = req.body
