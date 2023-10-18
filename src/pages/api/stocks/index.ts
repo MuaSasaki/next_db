@@ -1,8 +1,6 @@
 import type { NextApiRequest, NextApiResponse, NextApiHandler } from 'next';
 import  prisma  from '../../../lib/Prisma';
-import { useRouter } from 'next/router';
-import { PostStockData } from '@/lib/stock';
-
+import { StockPostType } from '@/types/post';
 
 
 const getHandler = async (
@@ -11,6 +9,9 @@ const getHandler = async (
     let statusCode = 200;
     const resStock = await prisma.stock
     .findMany()
+    .then((res) => {
+        return res;
+    })
     .catch((err) => {
         statusCode  = 500;
         console.log(err);
@@ -27,11 +28,11 @@ const postHandler = async (
     req:NextApiRequest,res:NextApiResponse
 )=>{
     let statusCode = 200;
-    const body:PostStockData = req.body;
+    const body:StockPostType = req.body;
     const resStock = await prisma.stock
     .create({data:{
-        stock_num:Number(body.stock_number),
-        pro_id:Number(body.pro_id)
+        stock_num:(body.stock_number),
+        pro_id:(body.pro_id)
     }})
     .then((res) => {
         return res;
@@ -46,9 +47,6 @@ const postHandler = async (
     })
     res.status(statusCode).json(resStock)
 };
-
-
-
 
 const handler: NextApiHandler = (req,res) =>{
     
