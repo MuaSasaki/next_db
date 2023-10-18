@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form"
 import * as Yup from 'yup';
 import { yupResolver } from "@hookform/resolvers/yup";
 import { StockPostType } from "@/types/post";
+import router from "next/router";
 
 
 const errorScheme = Yup.object().shape({
@@ -22,6 +23,7 @@ export default function OrderForm() {
     console.log("input data",data);
     const res = await postStockData(data);
     console.log(res);
+    router.reload()
   }
 
   return (
