@@ -20,6 +20,6 @@ export async function postStockData(postData:StockPostType){
     const res = await axios.post(url,data);
     return res.data;
   }catch(err){
-    console.error(err)
+    alert("すでに在庫がある商品です。\n 未発注の商品を発注してください。")
   }
 }

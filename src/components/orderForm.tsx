@@ -10,7 +10,7 @@ const errorScheme = Yup.object().shape({
   stock_number: Yup.number().required("発注数を入力してください。")
 })
 
-export type Form = Yup.InferType<typeof errorScheme>;
+type Form = Yup.InferType<typeof errorScheme>;
 
 export default function OrderForm() {
   const {
