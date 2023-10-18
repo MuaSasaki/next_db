@@ -25,16 +25,18 @@ export default function OrderForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <p>商品ID       発注数</p>
-      <input type="number" step="1" id = "pro_id"{...register("pro_id")} />
-      <input type="number" step="1" id = "stock_number"{...register("stock_number")}/>
-
-      <input type="submit" />
+    <>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <span>商品ID</span>
+        <input type="number" step="1" id = "pro_id"{...register("pro_id")} />
+        <span>発注数</span>
+        <input type="number" step="1" id = "stock_number"{...register("stock_number")}/>
+        <input type="submit" />
+      </form>
       <div>
         {errors.pro_id && <div>{errors.pro_id.message}</div>}
         {errors.stock_number && <div>{errors.stock_number.message}</div>}
       </div>
-    </form>
+    </>
   )
 }

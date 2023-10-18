@@ -19,24 +19,34 @@ export default function Home({allStockData,}:InferGetStaticPropsType<GetStaticPr
       <Head>
         <title>{siteTitle}</title>
       </Head>
-      <section className={utilStyles.stocks}>
-        <h1>在庫一覧</h1>
-        <ul>
+      {/* <section className={utilStyles.stocks}> */}
+        <table>
+          <thead>
+            <tr>
+              <th>商品在庫</th>
+            </tr>
+            <tr>
+              <th>在庫ID</th>
+              <th>在庫数</th>
+              <th>商品ID</th>
+            </tr>
+          </thead>
+          <tbody>
           {allStockData && allStockData.map((stock:StockGetType)=>{
             return(
-              <li key ={stock.id}>
-                <p>在庫ID:{stock.id}</p>
-                <p>在庫数:{stock.stock_num}</p>
-                <p>商品ID:{stock.pro_id}</p>
-              </li>
+              <tr key ={stock.id}>
+                <td>{stock.id}</td>
+                <td>{stock.stock_num}</td>
+                <td>{stock.pro_id}</td>
+              </tr>
             )
-          })}
-        </ul>
-      </section>
-      <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-        <h2 className={utilStyles.headingLg}>発注フォーム</h2>
+            })}
+          </tbody>
+        </table>
+      {/* </section> */}
+      {/* <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}> */}
         <OrderForm/>
-      </section>
+      {/* </section> */}
     </Layout>
   );
 }
