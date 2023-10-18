@@ -13,7 +13,15 @@ import Head from 'next/head';
 //   return{props:{productData}}
 // }
 
-const ProductDetail = async() => {
+const ProductDetail =({
+  postData,
+}: {
+  postData: {
+    title: string;
+    date: string;
+    contentHtml: string;
+  };
+}) => {
   const productData = await getProductData(Number(useSearchParams());
   return (
     <Layout home>
