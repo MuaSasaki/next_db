@@ -35,7 +35,7 @@ export default function Home({allStockData,}:InferGetStaticPropsType<GetStaticPr
           <tbody>
           {allStockData && allStockData.map((stock:StockGetType)=>{
             return(
-              <tr key ={stock.id} onClick={() => router.push(`/product/${stock.pro_id}`)}>
+              <tr key ={stock.id} onClick={() => router.push(`/product/${stock.id}`)}>
                   <td>{stock.id}</td>
                   <td>{stock.stock_num}</td>
                   <td>{stock.pro_id}</td>

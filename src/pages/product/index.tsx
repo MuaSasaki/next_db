@@ -6,6 +6,10 @@ import {getProductData} from "@/lib/productDetail"
 import { ProductGetType } from '@/types/productType';
 import { useEffect, useState } from 'react';
 
+export  const getStaticProps = async () =>{
+  const allStockData = await getStockData()
+  return{props:{allStockData}}
+}
 
 const ProductDetail:NextPage =() => {
   const [productData, setProductData] = useState<ProductGetType>({} as ProductGetType)
