@@ -1,31 +1,34 @@
 import type { NextApiRequest, NextApiResponse, NextApiHandler } from 'next';
 import  prisma  from '../../../lib/Prisma';
 
+
 const getHandler = async (
     req:NextApiRequest,res:NextApiResponse
 )=>{
     let statusCode = 200;
     const { productId } = req.query
-
-    // if(!productId || productId.length !== 0) {res.status(500).json("invalid value");}
+    console.log(productId)
+    if(!(typeof productId === "string")) {res.status(500).json("invalid value");}
     const productIdNumber = Number(productId)
-    const resStock = prisma.product
-    try{await resStock.findMany({
-        where: {
-            id:productIdNumber
-        }
-    })}
-    catch(error){
+    console.log("productnumber is ",productId);
+    try{
+        const resProduct = await prisma.product.findMany({
+            where:{
+                id:{
+                    equals:productIdNumber
+                }
+            }
+        })
+        res.status(statusCode).json(resProduct)
+    }catch (error){
         statusCode  = 500;
         console.log(error);
         return {error:'Failed to read'};
     }
-    finally{async () => {
+    
+    finally{
         await prisma.$disconnect();
     }}
-
-    res.status(statusCode).json(resStock)
-};
 
 const handler: NextApiHandler = (req,res) =>{
     

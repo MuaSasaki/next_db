@@ -34,11 +34,11 @@ export default function OrderForm() {
         <span>発注数</span>
         <input type="number" step="1" id = "stock_number"{...register("stock_number")}/>
         <input type="submit" />
+        <div>
+          {errors.pro_id && <div>{errors.pro_id.message}</div>}
+          {errors.stock_number && <div>{errors.stock_number.message}</div>}
+        </div>
       </form>
-      <div>
-        {errors.pro_id && <div>{errors.pro_id.message}</div>}
-        {errors.stock_number && <div>{errors.stock_number.message}</div>}
-      </div>
     </>
   )
 }
