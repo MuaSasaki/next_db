@@ -5,11 +5,3 @@ export declare type ProductGetType = {
   category:string,
   price:number
 }
-
-type ProductDataType = [
-    id:number,
-    pro_name:string,
-    maker:string,
-    category:string,
-    price:number
-]
