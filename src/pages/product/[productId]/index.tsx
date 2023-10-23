@@ -7,6 +7,7 @@ import Layout, { siteTitle } from '@/components/layout';
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import {putProductData} from "@/lib/productDetail"
 
 
 type FormValues = {
@@ -40,8 +41,9 @@ const ProductDetail:NextPage =() => {
       const product =router.query.product;
       if (typeof product ===  "string")
       {
-      setProductData(JSON.parse(product))
-      // console.log("router.queryデータ→→→→→→→→",productData)
+        // console.log("router.queryデータ→→→→→→→→",productData)
+        // router.reload();
+        setProductData(JSON.parse(product))
       }else return;
     };
   },[router]);
@@ -55,8 +57,18 @@ const ProductDetail:NextPage =() => {
   });
 
   const onSubmit : SubmitHandler<FormValues> = async (data:FormValues) => {
-
+    const putData :ProductGetType= {
+      id:productData.id,
+      pro_name:data.pro_name,
+      maker:data.maker,
+      category:data.category,
+      price:data.price
+    }
+    // const jsonPutData = JSON.stringify(putData)
+    await putProductData(putData)
   }
+  
+  console.log(typeof productData.price)
 
   return(
     <Layout home>
@@ -79,19 +91,19 @@ const ProductDetail:NextPage =() => {
             <tr>
               <td>{productData.id}</td>
               <td>
-                <input {...register("pro_name")}/>
+                <input defaultValue={productData.pro_name} {...register("pro_name")}/>
                 {errors["pro_name"] && errors["pro_name"]?.message}
               </td>
               <td>
-                <input {...register("maker")}/>
+                <input defaultValue={productData.maker} {...register("maker")}/>
                 {errors["maker"] && errors["maker"]?.message}
                 </td>
               <td>
-                <input {...register("category")}/>
+                <input defaultValue={productData.category} {...register("category")}/>
                 {errors["category"] && errors["category"]?.message}
               </td>
               <td>
-                <input {...register("price")}/>
+                <input defaultValue={productData.price} {...register("price")}/>
                 {errors["price"] && errors["price"]?.message}
               </td>
             </tr>

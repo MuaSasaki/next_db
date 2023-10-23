@@ -3,12 +3,25 @@ import  prisma  from '../../../lib/Prisma';
 import { ProductGetType } from '@/types/productType';
 
 
-const getHandler = async (
-    _:NextApiRequest,res:NextApiResponse
+const putHandler = async (
+    req:NextApiRequest,res:NextApiResponse
 )=>{
     let statusCode = 200;
+    const reqData:ProductGetType = req.body
+    // const reqData:ProductGetType = JSON.parse(body)
     const resStock = await prisma.product
-    .findMany()
+    .update({
+        where:{
+            // id:reqData.id,
+            id:1,
+        },
+        data:{
+            pro_name:reqData.pro_name,
+            maker:reqData.maker,
+            category:reqData.category,
+            price:reqData.price,
+        },
+    })
     .then((res) => {
         return res;
     })
@@ -24,12 +37,11 @@ const getHandler = async (
     res.status(statusCode).json(resStock)
 };
 
-
 const handler: NextApiHandler = (req,res) =>{
     
     switch(req.method){
-        case 'GET':
-            getHandler(req, res);
+        case 'PUT':
+            putHandler(req, res);
             break;
 
         default:
