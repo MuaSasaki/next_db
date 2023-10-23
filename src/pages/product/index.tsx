@@ -1,10 +1,11 @@
 import Head from 'next/head';
 import {GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
-import { useRouter } from 'next/router';
+import router, { useRouter } from 'next/router';
 import Layout, { siteTitle } from '@/components/layout';
 import {getOnlyProductData, getProductData} from "@/lib/productDetail"
 import { ProductGetType } from '@/types/productType';
 import { useEffect, useState } from 'react';
+import ChangeForm from "@/components/changeForm"
 
 export  const getStaticProps = async () =>{
   const ProductData = await getOnlyProductData()
@@ -61,16 +62,19 @@ const ProductDetail:NextPage =({ProductData,}:InferGetStaticPropsType<GetStaticP
             </tr>
           </thead>
           <tbody>
-            {ProductData && ProductData.map((stock:ProductGetType)=>{
+            {ProductData && ProductData.map((product:ProductGetType)=>{
               return(
-                <tr key ={stock.id} 
-                // onClick={() => router.push(`/product/${stock.id}`)}
+                <tr key ={product.id} 
+                onClick={() => router.push({
+                  pathname:`/product/change`,
+                  query:{product:JSON.stringify(product)}
+                })}
                 >
-                    <td>{stock.id}</td>
-                    <td>{stock.pro_name}</td>
-                    <td>{stock.maker}</td>
-                    <td>{stock.category}</td>
-                    <td>¥{stock.price}</td>
+                    <td>{product.id}</td>
+                    <td>{product.pro_name}</td>
+                    <td>{product.maker}</td>
+                    <td>{product.category}</td>
+                    <td>¥{product.price}</td>
                 </tr>
               )
               })}
