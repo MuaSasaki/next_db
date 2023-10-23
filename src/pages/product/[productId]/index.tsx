@@ -1,16 +1,9 @@
 import Head from 'next/head';
 import {NextPage } from 'next';
 import { useRouter } from 'next/router';
-import Layout, { siteTitle } from '@/components/layout';
-import {getProductData} from "@/lib/productDetail"
-import { ProductGetType } from '@/types/productType';
 import { useEffect, useState } from 'react';
-import * as Yup from 'yup';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import ChangeForm from '@/components/changeForm';
-import { StockPostType } from '@/types/post';
-import { postStockData } from '@/lib/stock';
+import { ProductGetType } from '@/types/productType';
+import Layout, { siteTitle } from '@/components/layout';
 
 
 const dataProps:ProductGetType ={
@@ -21,15 +14,9 @@ const dataProps:ProductGetType ={
   price:0,
 }
 
-
-
-
 const ProductDetail:NextPage =() => {
-  
-  const router = useRouter()
-
   const [productData,setProductData] = useState<ProductGetType>(dataProps)
-
+  const router = useRouter()
 
   useEffect(()=>{
     if (router.isReady) {
@@ -67,8 +54,6 @@ const ProductDetail:NextPage =() => {
           </tbody>
         </table>
         <input type="submit" />
-        <div>
-        </div>
     </Layout>
   );
 }

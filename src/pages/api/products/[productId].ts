@@ -16,28 +16,21 @@ const getHandler = async (
             where:{
                 id:{
                     equals:productIdNumber
-                }
-            }
-        })
+                }}})
         res.status(statusCode).json(resProduct)
     }catch (error){
         statusCode  = 500;
         console.log(error);
         return {error:'Failed to read'};
-    }
-    
-    finally{
+    }finally{
         await prisma.$disconnect();
     }}
 
 const handler: NextApiHandler = (req,res) =>{
-    
     switch(req.method){
         case 'GET':
             getHandler(req, res);
             break;
-
-
         default:
             return res.status(405).json({error:'Method not allowed.'});
     }
