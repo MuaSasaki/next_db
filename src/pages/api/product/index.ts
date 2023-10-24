@@ -1,6 +1,6 @@
-import type { NextApiRequest, NextApiResponse, NextApiHandler } from 'next';
 import  prisma  from '../../../lib/Prisma';
 import { ProductGetType } from '@/types/productType';
+import type { NextApiRequest, NextApiResponse, NextApiHandler } from 'next';
 
 
 const getHandler = async (

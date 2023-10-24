@@ -1,11 +1,10 @@
 import Head from 'next/head';
-import { GetStaticProps, InferGetStaticPropsType } from 'next';//GetStaticProps →実稼働環境のビルド時に実行され、ユーザーの操作前に（ページがリロードされた時に）自動的にレンダリング？
-import Layout, { siteTitle } from '../components/layout';
-import utilStyles from '../styles/utils.module.css';
+import router from 'next/router';
 import { StockGetType } from '@/types/get';
 import { getStockData } from '../lib/stock';
 import OrderForm from "../components/orderForm"
-import router from 'next/router';
+import Layout, { siteTitle } from '../components/layout';
+import { GetStaticProps, InferGetStaticPropsType } from 'next';
 
 
 export  const getStaticProps = async () =>{

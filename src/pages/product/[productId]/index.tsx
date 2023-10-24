@@ -65,7 +65,9 @@ const ProductDetail:NextPage =() => {
       price:data.price
     }
     // const jsonPutData = JSON.stringify(putData)
-    await putProductData(putData)
+    const res = await putProductData(putData)
+    console.log(res)
+    router.push("/product")
   }
   
   console.log(typeof productData.price)

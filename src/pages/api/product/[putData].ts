@@ -1,6 +1,6 @@
-import type { NextApiRequest, NextApiResponse, NextApiHandler } from 'next';
 import  prisma  from '../../../lib/Prisma';
 import { ProductGetType } from '@/types/productType';
+import type { NextApiRequest, NextApiResponse, NextApiHandler } from 'next';
 
 
 const putHandler = async (
@@ -12,8 +12,7 @@ const putHandler = async (
     const resStock = await prisma.product
     .update({
         where:{
-            // id:reqData.id,
-            id:1,
+            id:reqData.id,
         },
         data:{
             pro_name:reqData.pro_name,

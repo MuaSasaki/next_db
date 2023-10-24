@@ -1,17 +1,21 @@
-import {postStockData } from "@/lib/stock"
-import { useForm, SubmitHandler } from "react-hook-form"
-import * as Yup from 'yup';
-import { yupResolver } from "@hookform/resolvers/yup";
-import { StockPostType } from "@/types/post";
+import * as yup from 'yup';
 import router from "next/router";
+import {postStockData } from "@/lib/stock"
+import { StockPostType } from "@/types/post";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm, SubmitHandler } from "react-hook-form"
 
+type FormValues = {
+  pro_id: number;
+  stock_number:number;
+};
 
-const errorScheme = Yup.object().shape({
-  pro_id: Yup.number().required("商品IDを入力してください。"),
-  stock_number: Yup.number().required("発注数を入力してください。")
+const errorScheme = yup.object().shape({
+  pro_id: yup.number().positive().integer().typeError("数値の入力が必要です。").required("商品IDは必須項目です。"),
+  stock_number: yup.number().positive().integer().typeError("数値の入力が必要です。").required("発注数は必須項目です。")
 })
 
-type Form = Yup.InferType<typeof errorScheme>;
+
 
 export default function OrderForm() {
   const {
@@ -19,7 +23,7 @@ export default function OrderForm() {
     handleSubmit,
     formState: { errors },
   } = useForm({resolver:yupResolver(errorScheme)})
-  const onSubmit: SubmitHandler<StockPostType> = async (data:Form) => {
+  const onSubmit: SubmitHandler<StockPostType> = async (data:FormValues) => {
     console.log("input data",data);
     const res = await postStockData(data);
     console.log(res);
@@ -30,13 +34,13 @@ export default function OrderForm() {
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <span>商品ID</span>
-        <input type="number" step="1" id = "pro_id"{...register("pro_id")} />
+        <input {...register("pro_id")} />
         <span>発注数</span>
-        <input type="number" step="1" id = "stock_number"{...register("stock_number")}/>
+        <input {...register("stock_number")}/>
         <input type="submit" />
         <div>
-          {errors.pro_id && <div>{errors.pro_id.message}</div>}
-          {errors.stock_number && <div>{errors.stock_number.message}</div>}
+          {errors["pro_id"] && errors["pro_id"]?.message}
+          {errors["stock_number"] && errors["stock_number"]?.message}
         </div>
       </form>
     </>

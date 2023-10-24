@@ -1,10 +1,10 @@
 import Head from 'next/head';
+import Link from 'next/link';
 import Image from 'next/image';
 import styles from './layout.module.css';
 import utilStyles from '../styles/utils.module.css';
-import Link from 'next/link';
 
-const name = '[Your Name]';
+const name = 'instrument ECSite';
 export const siteTitle = 'Next.js Sample Website';
 
 export default function Layout({
@@ -42,7 +42,7 @@ export default function Layout({
               width={144}
               alt={name}
             />
-            <h1 className={utilStyles.heading2Xl}>{name}</h1>
+            <h1 className={utilStyles.heading2Xl}><a href="../">{name}</a></h1>
           </>
         ) : (
           <>
